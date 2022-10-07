@@ -116,6 +116,8 @@ namespace 三國志戰記2_Hack
             writeData.Skill[4] = (byte)findStringIdx(GameData.Skill, textBox13.Text);
             writeData.Skill[5] = (byte)findStringIdx(GameData.Skill, textBox14.Text);
             writeData.Title = (byte)findStringIdx(GameData.Title, textBox16.Text);
+            writeData.Dynasty = (byte)findStringIdx(GameData.Dynasty, textBox18.Text);
+            writeData.Status = (byte)findStringIdx(GameData.Status, textBox23.Text);
 
             modifyMemory(writeData.RealAddress + 0x02, writeData.ArmySize, 2);
             modifyMemory(writeData.RealAddress + 0x33, writeData.ArmyType, 1);
@@ -136,6 +138,8 @@ namespace 三國志戰記2_Hack
             modifyMemory(writeData.RealAddress + 0x31, writeData.Skill[4], 1);
             modifyMemory(writeData.RealAddress + 0x32, writeData.Skill[5], 1);
             modifyMemory(writeData.RealAddress + 0x35, writeData.Title, 1);
+            modifyMemory(writeData.RealAddress + 0x34, writeData.Dynasty, 1);
+            modifyMemory(writeData.RealAddress + 0x36, writeData.Status, 1);
         }
 
         private void fillTextBox()
@@ -163,6 +167,9 @@ namespace 三國志戰記2_Hack
             try {textBox13.Text = GameData.Skill[readMemory(writeData.RealAddress + 0x31, 1)]; } catch (Exception) { textBox13.Text = "無"; }
             try {textBox14.Text = GameData.Skill[readMemory(writeData.RealAddress + 0x32, 1)];}catch (Exception){textBox14.Text = "無";}
             textBox16.Text = GameData.Title[readMemory(writeData.RealAddress + 0x35, 1)];
+
+            textBox18.Text = GameData.Dynasty[readMemory(writeData.RealAddress + 0x34, 1)];
+            textBox23.Text = GameData.Status[readMemory(writeData.RealAddress + 0x36, 1)];
         }
 
         public Form1()
@@ -335,9 +342,34 @@ namespace 三國志戰記2_Hack
             writeAllData();
         }
 
-        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private void textBox18_Enter(object sender, EventArgs e)
         {
+            focusTextBox = (TextBox)sender;
+            listBox2.Items.Clear();
+            foreach (string s in GameData.Dynasty)
+                listBox2.Items.Add(s);
+        }
 
+        private void textBox18_Leave(object sender, EventArgs e)
+        {
+            if (listBox2.Focused == true || textBox2.Focused == true)
+                return;
+            listBox2.Items.Clear();
+        }
+
+        private void textBox23_Enter(object sender, EventArgs e)
+        {
+            focusTextBox = (TextBox)sender;
+            listBox2.Items.Clear();
+            foreach (string s in GameData.Status)
+                listBox2.Items.Add(s);
+        }
+
+        private void textBox23_Leave(object sender, EventArgs e)
+        {
+            if (listBox2.Focused == true || textBox2.Focused == true)
+                return;
+            listBox2.Items.Clear();
         }
     }
 }
@@ -355,6 +387,8 @@ class GameData
     static public string[] Skill = new string[90] { "突擊", "強襲突擊", "陷陣突擊", "強行突破", "側面攻擊", "側面強襲", "追擊", "猛追", "迫擊掃討", "單騎驅", "單騎破陣", "單騎突破", "鬼神急驅", "奮鬥", "轟雷奮鬥", "鬼神奮鬥", "李代桃僵", "速射", "亂射", "神仙亂射", "威壓", "威壓(變)", "大喝", "督戰", "大督戰", "火矢速射", "火矢亂射", "神仙火矢", "伏兵", "伏兵襲擊", "偃旗息鼓", "同士討", "同士討(變)", "二虎競食", "偽退誘敵", "偽退滅殺", "虛誘掩殺", "虛報前進", "虛報進軍", "圍魏救趙", "挑撥(變)", "挑撥", "大酒宴", "火計", "業火計", "爆殺火計", "水計", "瀑布計", "落石", "崩落計", "陷阱", "金輪奈落", "反客為主", "聲東擊西", "聲東擊西", "虛報集結", "離間計", "真孫子", "一齊攻擊", "集中攻擊", "一齊突擊", "十面突擊", "一齊破陣", "夾擊", "混亂夾擊", "打草驚蛇", "援護", "援護射擊", "後詰", "激勵", "大激勵", "波狀攻擊", "犄角", "犄角強襲", "犄角夾擊", "後方奇襲", "拋磚引玉", "包圍", "集合", "散開", "一齊砲擊", "一齊投射", "", "", "", "", "", "", "", "無"};
     static public string[] Title = new string[78] { "大將軍", "驃騎將軍", "車騎將軍", "衛將軍", "征東將軍", "征南將軍", "征西將軍", "征北將軍", "鎮東將軍", "鎮南將軍", "鎮西將軍", "鎮北將軍", "安東將軍", "安南將軍", "安西將軍", "安北將軍", "平東將軍", "平南將軍", "平西將軍", "平北將軍", "左將軍", "右將軍", "前將軍", "後將軍", "領軍將軍", "龍驤將軍", "征虜將軍", "鎮軍將軍", "撫軍將軍", "安遠將軍", "輔國將軍", "武衛將軍", "中衛將軍", "中堅將軍", "中壘將軍", "驍騎將軍", "游騎將軍", "寧朔將軍", "建德將軍", "建威將軍", "建武將軍", "振威將軍", "振武將軍", "奮威將軍", "奮武將軍", "揚威將軍", "揚武將軍", "廣威將軍", "廣武將軍", "積車將軍", "積弩將軍", "強弩將軍", "盪寇將軍", "昭武將軍", "昭文將軍", "討逆將軍", "破虜將軍", "橫江將軍", "安國將軍", "威東將軍", "威南將軍", "威西將軍", "威北將軍", "軍師將軍", "鷹揚將軍", "折衝將軍", "輕車將軍", "虎烈將軍", "宣威將軍", "威遠將軍", "寧遠將軍", "伏波將軍", "虎威將軍", "凌江將軍", "牙門將軍", "偏將軍", "裨將軍", "無" };
     static public string[] Feature = new string[30] { "策士", "萬人敵", "英雄", "奸雄", "霸王", "武神", "一騎當千", "不屈", "鐵壁", "支援", "神速", "神弓", "鬼謀", "暴虐", "冷靜沉著", "舌鋒", "心交", "德望", "暴威", "先見", "神技", "功名", "激情", "奸才", "勇猛", "名將", "反攻", "殊勳", "工作", "外交" };
+    static public string[] Dynasty = new string[25] { "曹操", "孫權", "劉備", "袁紹", "呂布", "不詳", "不詳", "不詳", "不詳", "不詳", "不詳", "不詳", "不詳", "不詳", "不詳", "不詳", "不詳", "不詳", "在野", "不詳", "不詳", "不詳", "不詳", "不詳", "不詳" };
+    static public string[] Status = new string[8] { "一般", "部隊", "密探", "不詳", "不詳", "不詳", "不詳", "不詳" };
 }
 
 
@@ -381,4 +415,7 @@ class WriteData
     public byte Power;
     public byte IQ;
     public byte Leadership;
+
+    public byte Dynasty;
+    public byte Status;
 }
