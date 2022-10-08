@@ -836,6 +836,8 @@
             this.textBox24.ReadOnly = true;
             this.textBox24.Size = new System.Drawing.Size(132, 25);
             this.textBox24.TabIndex = 54;
+            this.textBox24.Enter += new System.EventHandler(this.textBox24_Enter);
+            this.textBox24.Leave += new System.EventHandler(this.textBox24_Leave);
             // 
             // label22
             // 
@@ -855,6 +857,8 @@
             this.textBox25.ReadOnly = true;
             this.textBox25.Size = new System.Drawing.Size(132, 25);
             this.textBox25.TabIndex = 52;
+            this.textBox25.Enter += new System.EventHandler(this.textBox25_Enter);
+            this.textBox25.Leave += new System.EventHandler(this.textBox25_Leave);
             // 
             // label23
             // 
